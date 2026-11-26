@@ -100,50 +100,12 @@ function onSubmit() {
   </section>
 </template>
 
+<!-- Form, field and button styles are global (App.vue); only the preview is specific here. -->
 <style scoped>
-.form-card {
-  max-width: 520px;
-  margin: 0 auto;
-}
-
-.field {
-  display: flex;
-  flex-direction: column;
-  gap: 0.35rem;
-  margin-bottom: 1rem;
-}
-
-label {
-  font-weight: 600;
-}
-
-input:not([type='file']) {
-  padding: 0.55rem 0.7rem;
-  border: 1px solid #cbd2d9;
-  border-radius: 6px;
-  font-size: 1rem;
-}
-
-input.invalid {
-  border-color: #dc2626;
-}
-
-.error {
-  margin: 0;
-  color: #dc2626;
-  font-size: 0.875rem;
-}
-
 .preview {
   width: 96px;
   height: 96px;
   object-fit: cover;
   border-radius: 50%;
-}
-
-.actions {
-  display: flex;
-  justify-content: flex-end;
-  gap: 0.5rem;
 }
 </style>

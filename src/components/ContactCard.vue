@@ -1,4 +1,6 @@
 <script setup>
+import { isAuthenticated } from '@/services/auth'
+
 defineProps({
   contact: { type: Object, required: true },
 })
@@ -28,10 +30,16 @@ defineEmits(['delete'])
       >
         Details
       </RouterLink>
-      <RouterLink :to="{ name: 'contact-edit', params: { id: contact.id } }" class="button secondary">
-        Edit
-      </RouterLink>
-      <button type="button" class="button danger" @click="$emit('delete')">Delete</button>
+      <!-- Editing and deleting require an authenticated user. -->
+      <template v-if="isAuthenticated">
+        <RouterLink
+          :to="{ name: 'contact-edit', params: { id: contact.id } }"
+          class="button secondary"
+        >
+          Edit
+        </RouterLink>
+        <button type="button" class="button danger" @click="$emit('delete')">Delete</button>
+      </template>
     </div>
   </article>
 </template>

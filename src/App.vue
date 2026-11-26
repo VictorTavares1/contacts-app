@@ -1,7 +1,26 @@
+<script setup>
+import { useRouter } from 'vue-router'
+import { isAuthenticated, logout } from '@/services/auth'
+
+const router = useRouter()
+
+function onLogout() {
+  logout()
+  router.push({ name: 'contacts' })
+}
+</script>
+
 <template>
   <header class="app-header">
     <RouterLink :to="{ name: 'contacts' }" class="brand">Contacts</RouterLink>
-    <RouterLink :to="{ name: 'contact-create' }" class="button">Add contact</RouterLink>
+
+    <nav class="nav">
+      <template v-if="isAuthenticated">
+        <RouterLink :to="{ name: 'contact-create' }" class="button">Add contact</RouterLink>
+        <button type="button" class="button secondary" @click="onLogout">Logout</button>
+      </template>
+      <RouterLink v-else :to="{ name: 'login' }" class="button">Login</RouterLink>
+    </nav>
   </header>
 
   <main class="app-main">
@@ -13,7 +32,7 @@
   </main>
 </template>
 
-<!-- Global (unscoped) styles: base layout and shared UI classes used across all views. -->
+<!-- Global (unscoped) styles: base layout and UI classes shared across views. -->
 <style>
 * {
   box-sizing: border-box;
@@ -44,6 +63,11 @@ h1 {
   font-weight: 700;
   color: inherit;
   text-decoration: none;
+}
+
+.nav {
+  display: flex;
+  gap: 0.5rem;
 }
 
 .app-main {
@@ -79,5 +103,45 @@ h1 {
 
 .button.danger {
   background: #dc2626;
+}
+
+/* Forms: shared by the contact form and the login page. */
+.form-card {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-bottom: 1rem;
+}
+
+.field label {
+  font-weight: 600;
+}
+
+.field input:not([type='file']) {
+  padding: 0.55rem 0.7rem;
+  border: 1px solid #cbd2d9;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.field input.invalid {
+  border-color: #dc2626;
+}
+
+.error {
+  margin: 0;
+  color: #dc2626;
+  font-size: 0.875rem;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
 }
 </style>

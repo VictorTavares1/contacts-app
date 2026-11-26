@@ -5,10 +5,15 @@
   </header>
 
   <main class="app-main">
-    <RouterView />
+    <!--
+      Keyed by full path: create and edit share the same component,
+      so this forces a fresh instance (and a clean form) on every route change.
+    -->
+    <RouterView :key="$route.fullPath" />
   </main>
 </template>
 
+<!-- Global (unscoped) styles: base layout and shared UI classes used across all views. -->
 <style>
 * {
   box-sizing: border-box;
@@ -19,6 +24,10 @@ body {
   font-family: system-ui, sans-serif;
   background: #f5f6f8;
   color: #1f2933;
+}
+
+h1 {
+  margin-top: 0;
 }
 
 .app-header {
@@ -43,6 +52,14 @@ body {
   padding: 2rem 1rem;
 }
 
+.card {
+  background: #fff;
+  border: 1px solid #e1e4e8;
+  border-radius: 10px;
+  padding: 1.5rem;
+}
+
+/* Buttons work on both <button> and <RouterLink>. */
 .button {
   display: inline-block;
   padding: 0.5rem 1rem;

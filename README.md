@@ -43,6 +43,14 @@ npm run build
 
 The compiled app is generated in `dist/`. Its contents are meant to be copied into the server's `html` folder — no Node.js process is needed to serve it.
 
+## Tests
+
+Functional tests for the add/edit form validation (Vitest + Vue Test Utils):
+
+```bash
+npx vitest run
+```
+
 ## Login (demo)
 
 - Username: `admin`

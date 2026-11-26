@@ -23,6 +23,13 @@ function writeContacts(contacts) {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(contacts))
 }
 
+// Date.now() alone can repeat when two contacts are created in the same
+// millisecond, so the id is always at least one above the highest existing id.
+function nextId(contacts) {
+  const highestId = contacts.reduce((max, contact) => Math.max(max, contact.id), 0)
+  return Math.max(Date.now(), highestId + 1)
+}
+
 // Single place for input cleanup, used both when validating and saving,
 // so " John@Mail.com " and "john@mail.com" are treated as the same email.
 function normalize(data) {
@@ -44,9 +51,9 @@ export function getById(id) {
 }
 
 export function create(data) {
-  // Date.now() never repeats an id, even after deletions.
-  const contact = { id: Date.now(), ...normalize(data) }
-  writeContacts([...readContacts(), contact])
+  const contacts = readContacts()
+  const contact = { id: nextId(contacts), ...normalize(data) }
+  writeContacts([...contacts, contact])
   return contact
 }
 
